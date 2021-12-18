@@ -148,6 +148,9 @@ endif ()
 
 project(freetype C)
 
+SET(CMAKE_C_COMPILER arm-zephyr-eabi-gcc)
+ADD_COMPILE_OPTIONS(-Os -ffreestanding -fno-common -g -mcpu=cortex-m7 -mthumb -mabi=aapcs -Wall -Wformat -Wformat-security -Wno-format-zero-length -Wno-main -Wno-pointer-sign -Wpointer-arith -Wno-address-of-packed-member -Wno-unused-but-set-variable -Werror=implicit-int -fno-asynchronous-unwind-tables -fno-pie -fno-pic -fno-strict-overflow -fno-short-enums -fno-reorder-functions -fno-defer-pop -ffunction-sections -fdata-sections -std=c99)
+
 set(VERSION_MAJOR "2")
 set(VERSION_MINOR "11")
 set(VERSION_PATCH "0")
@@ -359,13 +362,7 @@ set(BASE_SRCS
   src/winfonts/winfnt.c
 )
 
-if (UNIX)
-  list(APPEND BASE_SRCS "builds/unix/ftsystem.c")
-elseif (WIN32)
-  list(APPEND BASE_SRCS "builds/windows/ftsystem.c")
-else ()
-  list(APPEND BASE_SRCS "src/base/ftsystem.c")
-endif ()
+list(APPEND BASE_SRCS "src/base/ftsystem.c")
 
 if (WIN32)
   enable_language(RC)
